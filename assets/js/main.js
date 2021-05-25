@@ -58,13 +58,51 @@ const singers = [
   },
 ];
 
+//DEFAULT
+
 singers.map((el) => {
   $('.table-body').innerHTML += `
     <tr>
     <td>${el.name}</td>
     <td>${el.country}</td>
-    <td>${el.period_active}</td>
+    <td>${el.period_active.start} ${el.period_active.end}</td>
     <td>${el.genre}</td>
     </tr>
     `;
+});
+
+function sortedSingers(arr) {
+  return arr.map((el) => {
+    $('.table-body').innerHTML += `<tr>
+      <td>${el.name}</td>
+      <td>${el.country}</td>
+      <td>${el.period_active.start} ${el.period_active.end}</td>
+      <td>${el.genre}</td>
+      </tr>`;
+  });
+}
+
+$on($$('.button'), 'click', (e) => {
+  $('.table-body').innerHTML = '';
+
+  if (e.target.innerHTML == 'Name') {
+    let newArray = singers.sort((a, b) =>
+      a.name.split(' ')[0] < b.name.split(' ')[0] ? -1 : 1
+    );
+    sortedSingers(newArray);
+  }
+  if (e.target.innerHTML == 'Country') {
+    let newArray = singers.sort((a, b) => (a.country < b.country ? -1 : 1));
+    sortedSingers(newArray);
+  }
+  if (e.target.innerHTML == 'Period Active') {
+    let newArray = singers.sort(
+      (a, b) => a.period_active.start - b.period_active.start
+    );
+    sortedSingers(newArray);
+  }
+  if (e.target.innerHTML == 'Genre') {
+    let newArray = singers.sort((a, b) => (a.genre < b.genre ? -1 : 1));
+    sortedSingers(newArray);
+  }
 });
