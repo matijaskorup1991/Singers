@@ -1,3 +1,12 @@
+'use strict';
+
+const $ = (el) => document.querySelector(el);
+const $$ = (el) => Array.from(document.querySelectorAll(el));
+const $on = (el, ev, fn) =>
+  Array.isArray(el)
+    ? el.forEach((item) => $on(item, ev, fn))
+    : el.addEventListener(ev, fn);
+
 const singers = [
   {
     name: 'The Beatles',
@@ -48,3 +57,14 @@ const singers = [
     genre: 'Progressive rock / Psychedelic rock',
   },
 ];
+
+singers.map((el) => {
+  $('.table-body').innerHTML += `
+    <tr>
+    <td>${el.name}</td>
+    <td>${el.country}</td>
+    <td>${el.period_active}</td>
+    <td>${el.genre}</td>
+    </tr>
+    `;
+});
